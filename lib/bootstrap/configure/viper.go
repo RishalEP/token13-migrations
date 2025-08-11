@@ -9,6 +9,9 @@ func InitViperLocalByEnv() error {
 	var v = ReadEnvConfig[ViperConfig]()
 	return InitViperLocalByPath(v.ConfigPath)
 }
+func GetViper() *viper.Viper {
+	return viper.GetViper()
+}
 
 func InitViperLocalByPath(path string) error {
 	viper.SetConfigFile(path)
@@ -17,12 +20,6 @@ func InitViperLocalByPath(path string) error {
 
 func MustInitViperLocalByPath(path string) {
 	if err := InitViperLocalByPath(path); err != nil {
-		panic(err)
-	}
-}
-
-func MustInitViperLocalByEnv() {
-	if err := InitViperLocalByEnv(); err != nil {
 		panic(err)
 	}
 }

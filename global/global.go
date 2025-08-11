@@ -1,9 +1,11 @@
 package global
 
 import (
+	"github.com/philchia/agollo/v4"
 	"github.com/spf13/viper"
 	"log"
 	"quicknode/core"
+	"strings"
 	"time"
 )
 
@@ -36,6 +38,31 @@ func New(configPath string) (*Config, error) {
 	}
 	GConfig = &Config{Viper: v}
 	return GConfig, err
+}
+func NewFromViper(v *viper.Viper) (*Config, error) {
+	GConfig = &Config{Viper: v}
+	return GConfig, nil
+}
+
+func NewFromApollo(namespace string) error {
+	// Get configuration from Apollo
+	apolloConfig := agollo.GetContent(agollo.WithNamespace(namespace))
+
+	// Create a new Viper instance
+	v := viper.New()
+	v.SetConfigType("yaml")
+
+	// Load the Apollo configuration into Viper
+	err := v.ReadConfig(strings.NewReader(apolloConfig))
+	if err != nil {
+		log.Printf("Failed to read Apollo config: %s\n", err)
+		return err
+	}
+
+	// Set the global configuration
+	GConfig = &Config{Viper: v}
+
+	return nil
 }
 
 func InitGlobal() func() {

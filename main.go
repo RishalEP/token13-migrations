@@ -6,6 +6,7 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"go.uber.org/zap"
 	"log"
 	"net/http"
 	"os"
@@ -29,20 +30,26 @@ func main() {
 	err := configure.InitApolloClient(l.Sugar())
 	var conf *core.Config
 	if err != nil {
-		l.Warn("apollo client init fail")
+		l.Info("Using local config", zap.String("path", *path))
+		// Apollo failed, use local config
 		configure.MustInitViperLocalByPath(*path)
 		conf = configure.ViperMustGetAll[core.Config]()
+		_, err = global.NewFromViper(configure.GetViper())
+		if err != nil {
+			log.Fatalf("Failed to initialize global configuration: %v", err)
+		}
 	} else {
+		// Apollo succeeded, use Apollo config
 		var apollo = configure.ReadEnvConfig[configure.Apollo]()
+		if len(apollo.NamespaceNames) == 0 {
+			log.Fatal("Apollo namespaces are not defined")
+		}
+		l.Info("Using Apollo config", zap.String("namespace", apollo.NamespaceNames[0]))
 		conf = configure.MustGet[core.Config](apollo.NamespaceNames[0])
-	}
-
-	//shutdown := telemetry.Init(ctx, l, conf.Otel.Service, conf.Otel.Endpoints.GRPC, conf.Otel.Endpoints.HTTP)
-	//defer shutdown()
-
-	_, err = global.New(*path)
-	if err != nil {
-		log.Fatalf("Failed to initialize global configuration: %v", err)
+		err = global.NewFromApollo(apollo.NamespaceNames[0])
+		if err != nil {
+			log.Fatalf("Failed to initialize global configuration from Apollo: %v", err)
+		}
 	}
 
 	cleanup := global.InitGlobal()
