@@ -2,6 +2,12 @@ server:
   port: 50051
   api_key: "qn_api_f7e9b3d2c1a0e8f7d6c5b4a3e2d1c0b9"
 
+db-data-source: "root:@tcp(localhost:3306)/token13_app?charset=utf8mb4&parseTime=True&loc=Local"
+db-config:
+  maxConn: 20
+  idleConn: 10
+  maxLeftTime: 3600
+
 trongrid:
   url: "https://api.trongrid.io"
   api_key: "1c7b4fd0-8d8a-4d40-8ba5-1e1ef8ae9926"
@@ -15,7 +21,6 @@ intervals:
   fetch_interval: 150m
 
 fetch_only: false
-config_path: "config.yml"
 
 quicknode:
   tron_endpoint: "https://api.quicknode.com/kv/rest/v1/lists/tron-watched-addresses"

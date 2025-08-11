@@ -40,7 +40,7 @@ func main() {
 	//shutdown := telemetry.Init(ctx, l, conf.Otel.Service, conf.Otel.Endpoints.GRPC, conf.Otel.Endpoints.HTTP)
 	//defer shutdown()
 
-	_, err = global.New(conf.ConfigPath)
+	_, err = global.New(*path)
 	if err != nil {
 		log.Fatalf("Failed to initialize global configuration: %v", err)
 	}
