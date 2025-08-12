@@ -30,7 +30,7 @@ func main() {
 	err := configure.InitApolloClient(l.Sugar())
 	var conf *core.Config
 	if err != nil {
-		l.Info("Using local config", zap.String("path", *path))
+		l.Info("Apoloo init failed fallback to Using local config", zap.String("path", *path))
 		// Apollo failed, use local config
 		configure.MustInitViperLocalByPath(*path)
 		conf = configure.ViperMustGetAll[core.Config]()
