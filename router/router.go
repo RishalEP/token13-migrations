@@ -1,6 +1,7 @@
 package router
 
 import (
+	"bootstrap/telemetry"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"quicknode/handler"
@@ -12,6 +13,8 @@ type Router struct {
 	handler *handler.Handler
 	apiKey  string
 }
+
+var l = telemetry.NewLogger()
 
 func APIKeyMiddleware(validAPIKey string) gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -28,18 +31,24 @@ func APIKeyMiddleware(validAPIKey string) gin.HandlerFunc {
 }
 
 func NewRouter(transactionService *service.TransactionService, apiKey string) *Router {
+	l.Info("Initializing router...")
 	r := &Router{
 		engine:  gin.Default(),
 		handler: handler.NewHandler(transactionService),
 		apiKey:  apiKey,
 	}
+
 	r.registerRoutes()
+	l.Info("API key: " + r.apiKey)
+
 	return r
 }
 
 func (r *Router) registerRoutes() {
 	quicknode := r.engine.Group("/quicknode")
 	quicknode.Use(APIKeyMiddleware(r.apiKey))
+	l.Info("API key: " + r.apiKey)
+
 	{
 		quicknode.POST("/sync", r.handler.SyncAddresses)
 		quicknode.POST("/fetch", r.handler.FetchTransactions)
