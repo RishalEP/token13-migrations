@@ -1,4 +1,7 @@
-FROM golang:1.23.6-alpine as builder
+#FROM golang:1.23.6-alpine as builder
+
+ARG BASE_IMAGE
+FROM ${BASE_IMAGE:-golang:1.23.6-alpine} AS builder
 
 ARG PackageName=quicknode
 
