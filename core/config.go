@@ -1,8 +1,6 @@
 package core
 
 import (
-	"gopkg.in/yaml.v2"
-	"os"
 	"time"
 )
 
@@ -78,25 +76,4 @@ type Otel struct {
 type Endpoints struct {
 	HTTP string `yaml:"http"`
 	GRPC string `yaml:"grpc"`
-}
-
-// New Setup init config
-func New(path string) (*Config, error) {
-	// config global config instance
-	if len(path) == 0 {
-		path = "config_main.yml"
-	}
-	var config = new(Config)
-
-	data, err := os.ReadFile(path)
-	if err != nil {
-		return nil, err
-	}
-
-	err = yaml.Unmarshal(data, config)
-	if err != nil {
-		return nil, err
-	}
-
-	return config, nil
 }

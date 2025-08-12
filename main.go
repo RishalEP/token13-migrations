@@ -23,7 +23,7 @@ import (
 func main() {
 	var ctx = context.Background()
 	var l = telemetry.NewLogger()
-	var path = flag.String("c", "config_main.yml", "config path")
+	var path = flag.String("c", "config_main.yaml", "config path")
 
 	flag.Parse()
 
