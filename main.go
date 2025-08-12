@@ -82,7 +82,7 @@ func main() {
 	}
 
 	go func() {
-		log.Printf("Conf at startup: %+v", conf.Server)
+		log.Printf("Conf at startup: %+v", conf)
 		log.Printf("HTTP server listening on port %d", "8800")
 		if err := httpServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			log.Fatalf("Failed to start HTTP server: %v", err)
