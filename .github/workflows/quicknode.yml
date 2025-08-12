@@ -52,6 +52,7 @@ jobs:
             docker rm quicknode || true && \
             docker run -d --name quicknode \
               -p 8800:8800 \
+              -e apollo_namespace=config_main.yaml \
               --restart always \
               $IMAGE_NAME
           "
