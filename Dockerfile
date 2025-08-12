@@ -40,4 +40,6 @@ ENV apollo_cluster=default
 ENV apollo_secret=a19114427811434b9cf4456220d896df
 ENV apollo_namespace=$CONFIG
 
+EXPOSE 8800:8800
+
 CMD /$APPDIR/$APP -c /$APPDIR/$CONFIG
