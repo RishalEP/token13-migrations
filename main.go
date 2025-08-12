@@ -5,7 +5,6 @@ import (
 	"bootstrap/telemetry"
 	"context"
 	"flag"
-	"fmt"
 	"go.uber.org/zap"
 	"log"
 	"net/http"
@@ -78,15 +77,17 @@ func main() {
 	// Start HTTP server
 	r := router.NewRouter(transactionService, conf.Server.APIKey)
 	httpServer := &http.Server{
-		Addr:    fmt.Sprintf(":%d", conf.Server.Port),
+		Addr:    "8800",
 		Handler: r.Engine(),
 	}
 
 	go func() {
-		log.Printf("HTTP server listening on port %d", conf.Server.Port)
+		log.Printf("Conf at startup: %+v", conf.Server)
+		log.Printf("HTTP server listening on port %d", "8800")
 		if err := httpServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			log.Fatalf("Failed to start HTTP server: %v", err)
 		}
+
 	}()
 
 	go func() {
