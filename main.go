@@ -77,7 +77,7 @@ func main() {
 	// Start HTTP server
 	r := router.NewRouter(transactionService, conf.Server.APIKey)
 	httpServer := &http.Server{
-		Addr:    "8800",
+		Addr:    ":8800",
 		Handler: r.Engine(),
 	}
 
