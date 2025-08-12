@@ -66,15 +66,17 @@ func NewFromApollo(namespace string) error {
 }
 
 func InitGlobal() func() {
-	config := &core.AppConfig{
-		DBDataSource: GConfig.Viper.GetString("db-data-source"),
-		DBConfig: core.DBConfig{
-			MaxConn:     GConfig.Viper.GetInt("db-config.maxConn"),
-			IdleConn:    GConfig.Viper.GetInt("db-config.idleConn"),
-			MaxLeftTime: GConfig.Viper.GetInt("db-config.maxLeftTime"),
-		},
+	dbConfig := core.DBConfig{
+		MaxConn:      GConfig.Viper.GetInt("db-config.maxConn"),
+		IdleConn:     GConfig.Viper.GetInt("db-config.idleConn"),
+		MaxLeftTime:  GConfig.Viper.GetInt("db-config.maxLeftTime"),
+		DBDataSource: GConfig.Viper.GetString("db-config.db-data-source"),
 	}
-	err := AddDB(DBNameToken13, config.DBDataSource, config.DBConfig.MaxConn, config.DBConfig.IdleConn, time.Duration(config.DBConfig.MaxLeftTime)*time.Second)
+
+	log.Printf("InitGlobal: MaxConn=%d, IdleConn=%d, MaxLeftTime=%d, DBDataSource=%s",
+		dbConfig.MaxConn, dbConfig.IdleConn, dbConfig.MaxLeftTime, dbConfig.DBDataSource)
+
+	err := AddDB(DBNameToken13, dbConfig.DBDataSource, dbConfig.MaxConn, dbConfig.IdleConn, time.Duration(dbConfig.MaxLeftTime)*time.Second)
 	if err != nil {
 		log.Fatalf("Failed to connect to database: %v", err)
 		return nil

@@ -46,19 +46,19 @@ type Config struct {
 	FetchOnly  bool      `yaml:"fetch_only"`
 	ConfigPath string    `yaml:"config_path"`
 	Otel       Otel      `yaml:"otel"`
+	DBConfig   DBConfig  `yaml:"db-config"`
 }
 
 type AppConfig struct {
-	DBDataSource string   `yaml:"db-data-source"`
-	DBConfig     DBConfig `yaml:"db-config"`
-	DomainURL    string   `yaml:"domain-url"`
-	Otel         Otel     `yaml:"otel"`
-	Redis        Redis    `yaml:"redis"`
+	DomainURL string `yaml:"domain-url"`
+	Otel      Otel   `yaml:"otel"`
+	Redis     Redis  `yaml:"redis"`
 }
 type DBConfig struct {
-	MaxConn     int `yaml:"maxConn"`
-	IdleConn    int `yaml:"idleConn"`
-	MaxLeftTime int `yaml:"maxLeftTime"`
+	MaxConn      int    `yaml:"maxConn"`
+	IdleConn     int    `yaml:"idleConn"`
+	MaxLeftTime  int    `yaml:"maxLeftTime"`
+	DBDataSource string `yaml:"db-data-source"`
 }
 
 type Redis struct {
