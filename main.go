@@ -44,11 +44,14 @@ func main() {
 			log.Fatal("Apollo namespaces are not defined")
 		}
 		l.Info("Using Apollo config", zap.String("namespace", apollo.NamespaceNames[0]))
-		conf = configure.MustGet[core.Config](apollo.NamespaceNames[0])
 		err = global.NewFromApollo(apollo.NamespaceNames[0])
 		if err != nil {
 			log.Fatalf("Failed to initialize global configuration from Apollo: %v", err)
 		}
+		// Use Viper to parse the Apollo configuration
+		conf = configure.ViperMustGetAll[core.Config]()
+		// Log the configuration to verify it's properly loaded
+		log.Printf("Apollo configuration loaded successfully: %+v", conf)
 	}
 
 	cleanup := global.InitGlobal()
