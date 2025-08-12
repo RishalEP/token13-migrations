@@ -5,6 +5,7 @@ import (
 	"github.com/philchia/agollo/v4"
 	"go.uber.org/zap"
 	"gopkg.in/yaml.v3"
+	"log"
 	"strings"
 )
 
@@ -28,6 +29,7 @@ func InitApolloClient(logger agollo.Logger) error {
 
 func ApolloGet[T any](namespace string) (*T, error) {
 	var content = agollo.GetContent(agollo.WithNamespace(namespace))
+	log.Printf("Raw Apollo configuration content for namespace %s: %s", namespace, content)
 	var t = new(T)
 	de := yaml.NewDecoder(strings.NewReader(content))
 	de.KnownFields(true)
