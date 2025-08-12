@@ -37,9 +37,6 @@ WORKDIR /app
 
 COPY --from=builder /${PackageName}/${AppName}  ${AppName}
 
-# COPY config_main.yaml /app/config_main.yaml 
-# ENV CONFIG=config_main.yaml
-
 ENV apollo_addr=2tconfig.token13.co
 ENV apollo_app_id=quicknode
 ENV apollo_cluster=dev
