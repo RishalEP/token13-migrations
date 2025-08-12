@@ -34,10 +34,10 @@ WORKDIR /app
 
 COPY --from=builder /${PackageName}/${AppName}  ${AppName}
 
-ENV apollo_addr=config.token13.net
+ENV apollo_addr=2tconfig.token13.co
 ENV apollo_app_id=quicknode
-ENV apollo_cluster=default
-ENV apollo_secret=a19114427811434b9cf4456220d896df
+ENV apollo_cluster=dev
+ENV apollo_secret=6a0e635262d54ac59c28525f85722b42
 ENV apollo_namespace=$CONFIG
 
 EXPOSE 8800:8800
