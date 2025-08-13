@@ -3,7 +3,7 @@ name: Quicknode Build and Deploy on VM
 
 on:
   push:
-    branches: [ main ]
+    branches: [ test ]
 
 jobs:
   deploy:
