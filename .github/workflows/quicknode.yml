@@ -4,6 +4,7 @@ name: Quicknode Build and Deploy on VM
 on:
   push:
     branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   deploy:
