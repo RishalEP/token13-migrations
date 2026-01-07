@@ -1,0 +1,37 @@
+server:
+  port: 8800
+  api_key: "my-local-secret-key" # You will use this in the X-API-Key header
+
+trongrid:
+  url: "https://api.trongrid.io" # or https://nile.trongrid.io for testnet
+  api_key: "1c7b4fd0-8d8a-4d40-8ba5-1e1ef8ae9926"
+
+etherscan:
+  url: "https://api.etherscan.io/api"
+  api_key: "QVDVP85WK5D2UT77DWYEZPHGWZ2U5JFU3K"
+
+quicknode:
+  tron_endpoint: "https://api.quicknode.com/kv/rest/v1/lists/tron-watched-addresses"
+  eth_endpoint: "https://delicate-wandering-crater.quiknode.pro/5a55838846dd34d3ad3808b4fd2e1be75b223b19"
+  api_key: "QN_abfe2027e7034d05a3a99466061acc37"
+  api_key_header: "x-api-key"
+
+intervals:
+  sync_interval: 10m
+  fetch_interval: 10m
+
+fetch_only: false
+config_path: "config_main.yaml"
+
+otel:
+  service: "quicknode-local"
+  endpoints:
+    http: "" # Optional, leave as is if you don't have OTEL collector
+    grpc: "localhost:4317"
+
+# Database Configuration
+db-config:
+  maxConn: 10
+  idleConn: 5
+  maxLeftTime: 300
+  db-data-source: "root:Password@tcp(127.0.0.1:3306)/token13_app?charset=utf8mb4&parseTime=True&loc=Local"
